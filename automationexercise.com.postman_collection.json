@@ -1,0 +1,425 @@
+{
+  "info": {
+    "_postman_id": "e0bf3270-b5dc-4e15-8783-1c4fd6954af8",
+    "name": "automationexercise.com",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54091606",
+    "_collection_link": "https://go.postman.co/collection/54091606-e0bf3270-b5dc-4e15-8783-1c4fd6954af8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "API 1: Get All Products List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response time is less than 3s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response code is 200\", function () {",
+              "    pm.expect(jsonData.responseCode).to.eql(200);",
+              "});",
+              "",
+              "//verify products list exist ",
+              "pm.test(\"Products list exists\", function () {",
+              "    pm.expect(jsonData).to.have.property(\"products\");",
+              "    pm.expect(jsonData.products).to.be.an(\"array\");",
+              "});",
+              "",
+              "",
+              "//validate products list is not empty ",
+              "pm.test(\"Products list is not empty\", function () {",
+              "    pm.expect(jsonData.products.length).to.be.above(0);",
+              "});",
+              "",
+              "",
+              "",
+              "//validate the products list structure",
+              "pm.test(\"Each product has valid structure\", function () {",
+              "",
+              "    jsonData.products.forEach((product) => {",
+              "        pm.expect(product).to.have.property(\"id\");",
+              "        pm.expect(product).to.have.property(\"name\");",
+              "        pm.expect(product).to.have.property(\"price\");",
+              "        pm.expect(product).to.have.property(\"brand\");",
+              "        pm.expect(product).to.have.property(\"category\");",
+              "",
+              "        // Nested validation",
+              "        pm.expect(product.category).to.have.property(\"usertype\");",
+              "        pm.expect(product.category).to.have.property(\"category\");",
+              "",
+              "        pm.expect(product.category.usertype).to.have.property(\"usertype\");",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "https://automationexercise.com/api/productsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API 2: POST To All Products List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 2s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Response body contains 'This request method is not supported.'\", function () {",
+              "pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");",
+              "});",
+              "",
+              "pm.test(\"Retrieved response code is: 405'\", function () {",
+              "pm.expect(jsonData.responseCode).to.eql(405);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/productsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API 3: Get All Brands List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 2s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Retrieved response code is: 200\", function () {",
+              "pm.expect(jsonData.responseCode).to.eql(200);",
+              "});",
+              "",
+              "",
+              "",
+              "//verify brands list exist ",
+              "pm.test(\"Brands list exists\", function () {",
+              "    pm.expect(jsonData).to.have.property(\"brands\");",
+              "    pm.expect(jsonData.brands).to.be.an(\"array\");",
+              "});",
+              "",
+              "",
+              "",
+              "pm.test(\"Brand list is not empty\", function () {",
+              "pm.expect(jsonData.brands.length).to.be.above(0);",
+              "});",
+              "",
+              "",
+              "",
+              "//validate the brands list structure",
+              "pm.test(\"Each brand has valid structure\", function () {",
+              "",
+              "    jsonData.brands.forEach((brand) => {",
+              "        pm.expect(brand).to.have.property(\"id\");",
+              "        pm.expect(brand).to.have.property(\"brand\");",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/brandsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "brandsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API 4: PUT To All Brands List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 2s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Retrieved response code is: 405\", function () {",
+              "pm.expect(jsonData.responseCode).to.eql(405);",
+              "});",
+              "",
+              "",
+              "pm.test(\"This request method is not supported.\", function () {",
+              "pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/brandsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "brandsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API 5: POST To Search Product",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 2s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"The responce code is 200\", function () {",
+              "pm.expect(jsonData.responseCode).to.eql(200);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Product is not empty\", function () {",
+              "    pm.expect(jsonData.products.length).to.be.above(0);",
+              "});",
+              "",
+              "",
+              "",
+              "",
+              "pm.test(\"Each product has valid structure\", function () {",
+              "",
+              "    jsonData.products.forEach((product) => {",
+              "        pm.expect(product).to.have.property(\"id\");",
+              "        pm.expect(product).to.have.property(\"name\");",
+              "        pm.expect(product).to.have.property(\"price\");",
+              "        pm.expect(product).to.have.property(\"brand\");",
+              "        pm.expect(product).to.have.property(\"category\");",
+              "",
+              "        // Nested validation",
+              "        pm.expect(product.category).to.have.property(\"usertype\");",
+              "        pm.expect(product.category).to.have.property(\"category\");",
+              "",
+              "        pm.expect(product.category.usertype).to.have.property(\"usertype\");",
+              "    });",
+              "});",
+              "",
+              "",
+              "",
+              "",
+              "pm.test(\"Returned products are relevant to search term\", function () {",
+              "   var searchTerm = pm.request.body.formdata.get(\"search_product\").toLowerCase();",
+              "",
+              "    jsonData.products.forEach(function(product) {",
+              "        pm.expect(product.name.toLowerCase()).to.include(searchTerm);",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "search_product",
+              "value": "{{searchedProducts}}",
+              "type": "text",
+              "uuid": "dc5f45cd-c140-4a43-b3d3-b24530c90ae7"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://automationexercise.com/api/searchProduct",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API 6: POST To Search Product without search_product parameter",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 2s\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"The responce code is 400\", function () {",
+              "pm.expect(jsonData.responseCode).to.eql(400);",
+              "});",
+              "",
+              "",
+              "",
+              "pm.test(\"This is a bad request as the search_product parameter is missing in POST request.\", function () {",
+              "pm.expect(jsonData.message).to.eql(\"Bad request, search_product parameter is missing in POST request.\");",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/searchProduct",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
